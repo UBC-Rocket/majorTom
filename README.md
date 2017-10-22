@@ -1,3 +1,2 @@
 # majorTom
-Flight Control Software Repo \n
-UBC Racket
+Flight Control Software Repo for UBC Racket
