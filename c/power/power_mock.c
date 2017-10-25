@@ -1,0 +1,3 @@
+/*
+Mock implementation of Power board
+*/

@@ -1,0 +1,3 @@
+/*
+Header file for Apogee Detection board
+*/
