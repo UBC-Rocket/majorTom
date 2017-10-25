@@ -1,0 +1,3 @@
+/*
+Mock implementation of Apogee Detection board
+*/
