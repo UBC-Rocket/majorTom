@@ -1,0 +1,3 @@
+/*
+Mock implementation of CAN bus library
+*/
