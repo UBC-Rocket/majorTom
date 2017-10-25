@@ -17,6 +17,10 @@ BOARDS = sharetest apdec telem power
 # A list of compilers associated with elements of $(BUILDS)
 CC_mock = gcc
 
+# By default, mock every board. This has to be the first rule or else it won't run when you type 'make'
+default:
+	$(foreach i,$(BOARDS), ./mock $(i) ;)
+
 # Each o file depends on corresponding c and h files
 define rules_o
 $(DIR_OBJ)/%_$(1).o: $(DIR_SRC)/%_$(1).c $(DIR_INC)/%.h
@@ -43,4 +47,4 @@ cleanimg:
 clean: cleano cleanimg
 
 # Phony rules
-.PHONY: cleano cleanimg clean
+.PHONY: default cleano cleanimg clean
