@@ -25,7 +25,7 @@ default:
 define rules_o
 $(DIR_OBJ)/%_$(1).o: $(DIR_SRC)/%_$(1).c $(DIR_INC)/%.h
 	@mkdir -p $$(@D)
-	$(CC_$(1)) -o $$@ $$< -I $(DIR_INC) -c
+	$(CC_$(1)) -o $$@ $$< -I$(DIR_INC) -I$(DIR_INC)/$$(firstword $$(subst /, ,$$*)) -c
 endef
 $(foreach i,$(BUILDS),$(eval $(call rules_o,$(i))))
 
