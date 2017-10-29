@@ -1,5 +1,5 @@
 /*
-Mock implementation of Power board
+Main implementation of Power board
 */
 
 #include <power.h>

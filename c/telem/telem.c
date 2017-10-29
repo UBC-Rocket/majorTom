@@ -1,5 +1,5 @@
 /*
-Mock implementation of Telemetry board
+Main implementation of Telemetry board
 */
 
 #include <telem.h>

@@ -1,5 +1,5 @@
 /*
-Mock implementation of Shared Library Test board
+Main implementation of Shared Library Test board
 */
 
 #include <sharetest.h>
