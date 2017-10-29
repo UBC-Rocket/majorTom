@@ -12,7 +12,7 @@ DIR_IMG = ../img
 BUILDS = mock
 
 # A list of boards MajorTom contains firmware for
-BOARDS = sharetest apdec telem power
+BOARDS = sharetest apdet telem power
 
 # A list of compilers associated with elements of $(BUILDS)
 CC_mock = gcc
@@ -23,7 +23,10 @@ default:
 
 # Each o file depends on corresponding c and h files
 define rules_o
-$(DIR_OBJ)/%_$(1).o: $(DIR_SRC)/%_$(1).c $(DIR_INC)/%.h
+$(DIR_OBJ)/%_hw_$(1).o: $(DIR_SRC)/%_hw_$(1).c $(DIR_INC)/%.h
+	@mkdir -p $$(@D)
+	$(CC_$(1)) -o $$@ $$< -I$(DIR_INC) -I$(DIR_INC)/$$(firstword $$(subst /, ,$$*)) -c
+$(DIR_OBJ)/%.o: $(DIR_SRC)/%.c $(DIR_INC)/%.h
 	@mkdir -p $$(@D)
 	$(CC_$(1)) -o $$@ $$< -I$(DIR_INC) -I$(DIR_INC)/$$(firstword $$(subst /, ,$$*)) -c
 endef
@@ -33,7 +36,7 @@ $(foreach i,$(BUILDS),$(eval $(call rules_o,$(i))))
 define rules_img_mock
 .PHONY: $(1)_mock
 $(1)_mock: $(DIR_IMG)/$(1)_mock.img
-$(DIR_IMG)/$(1)_mock.img: $(DIR_OBJ)/$(1)/$(1)_mock.o $(DIR_OBJ)/shared/init_mock.o $(DIR_OBJ)/shared/gpio_mock.o $(DIR_OBJ)/shared/can_mock.o
+$(DIR_IMG)/$(1)_mock.img: $(DIR_OBJ)/$(1)/$(1).o $(DIR_OBJ)/$(1)/$(1)_hw_mock.o $(DIR_OBJ)/shared/init_hw_mock.o $(DIR_OBJ)/shared/gpio_hw_mock.o $(DIR_OBJ)/shared/can_hw_mock.o
 	@mkdir -p $(DIR_IMG)
 	$(CC_mock) -o $$@ $$?
 endef
