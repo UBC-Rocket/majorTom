@@ -10,4 +10,7 @@ Header file containing general macros
 #define STATUS_ERROR        -1
 #define STATUS_BAD_PARAM    -2
 
+/* CAN Arbitration fields */
+#define CAN_ARBITRATION_APDET
+
 #endif
