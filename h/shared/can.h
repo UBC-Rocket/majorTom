@@ -5,10 +5,12 @@ Header file for CAN bus library
 #ifndef CAN_H
 #define CAN_H
 
+#include <general.h>
+
 //CAN functions go here
-int canPub(char *formatted_msg);
-int canSub(char *received_msg);
-int canFormat(char *formatted_msg, char *msg_to_format);
-int canDecode(char *decoded_msg,  char *msg_to_decode);
+status_t canPub(char *formatted_msg);
+status_t canSub(char *received_msg);
+status_t canFormat(char *formatted_msg, char *msg_to_format);
+status_t canDecode(char *decoded_msg,  char *msg_to_decode);
 
 #endif

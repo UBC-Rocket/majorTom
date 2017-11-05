@@ -6,9 +6,11 @@ Header file containing general macros
 #define GENERAL_H
 
 /* Return codes */
-#define STATUS_OK           0
-#define STATUS_ERROR        -1
-#define STATUS_BAD_PARAM    -2
+typedef enum status_enum {
+	STATUS_OK        =  0,
+	STATUS_ERROR     = -1,
+	STATUS_BAD_PARAM = -2
+} status_t;
 
 /* CAN Arbitration fields */
 #define CAN_ARBITRATION_APDET
