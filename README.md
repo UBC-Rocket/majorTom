@@ -5,5 +5,5 @@ Flight Control Software Repo for UBC Rocket.
 To build the project, first install Docker, then use it to build the project.
 
 1. Install Docker on your workstation (http://docker.com)
-2. Pull Image
+2. Pull Image with ```sudo docker pull ubcrocket/majortombuild```
 3. Run the Docker Image with specified Docker container
