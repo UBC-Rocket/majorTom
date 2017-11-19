@@ -4,6 +4,8 @@ Flight Control Software Repo for UBC Rocket.
 # Project Build Instructions
 To build the project, first install Docker, then use it to build the project.
 
-1. Install Docker on your workstation (http://docker.com)
-2. Pull Image with ```sudo docker pull ubcrocket/majortombuild```
-3. Run the Docker Image with specified Docker container
+1. Install Docker on your workstation from http://docker.com based on your workstation OS.
+2. Pull Our Docker Image by running `sudo docker pull ubcrocket/majortombuild`on your workstation.
+3. Navigate to the root folder of your local MajorTom repo.
+4. Run ```sudo docker run -it --volume `pwd`:/home/rkt --user=$UID:$GID ubcrocket/majortombuild make``` to compile the project.
+5. You're finished! You can now run the complied image files in `MajorTom/img`.
