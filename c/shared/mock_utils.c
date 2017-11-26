@@ -13,6 +13,14 @@ Implementations of mocking utilities
 #include "mock_utils.h"
 
 
+//returns time in seconds
+time_t getTimeSec()
+{
+	struct timespec spec;
+	clock_gettime(CLOCK_REALTIME, &spec);
+	return spec.tv_sec;
+}
+
 status_t tsprintf(const char* format, ...)
 {
 	/* Get the current time */
