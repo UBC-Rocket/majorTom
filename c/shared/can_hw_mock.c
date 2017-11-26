@@ -2,14 +2,14 @@
 Mock implementation of CAN bus library's hardware-dependent portion
 */
 
-#include <stdio.h>
 #include <stdint.h>
+#include <stdio.h>
 
 #include <shared/can.h>
-#include <shared/init.h>
 #include <general.h>
+#include <shared/mock_utils.h>
 
-//Mock implementations of functions from can.h
+/* Mock implementations of functions from can.h */
 
 /**
  * @brief A mock implementation of writing a message to the CAN bus.
@@ -19,7 +19,11 @@ Mock implementation of CAN bus library's hardware-dependent portion
  */
 status_t canWrite(can_id_t id, uint64_t data)
 {
-	fprintf(fp_can_write, "%lu\n%lu\n", id, data);
+	tsprintf("Writing CAN message to file.\n");
+	if (fprintf(fp_can_write, "%lu, %lu\n", id, data) <= 0) {
+		tsprintf("Error writing message to file.\n");
+		return STATUS_ERROR;
+	}
 
 	return STATUS_OK;
 }
@@ -32,14 +36,18 @@ status_t canWrite(can_id_t id, uint64_t data)
  */
 status_t canRead(can_id_t *id, uint64_t *data)
 {
-	fscanf(fp_can_read, "%lu%lu", id, data);
+	tsprintf("Reading CAN message from file.\n");
+	if (fscanf(fp_can_read, "%lu, %lu\n", id, data) != 2) {
+		tsprintf("Error reading message from file.\n");
+		return STATUS_ERROR;
+	}
 
-	//Same functionality as the CAN controller filters and masks.
+	/* Same functionality as the CAN controller filters and masks. */
 	if (*id == CAN_ALWAYS_PROCESS) {
-		printf("CAN message processed!\n");
+		tsprintf("CAN message processed!\n");
 		return STATUS_OK;
 	}
 
-	printf("CAN message ignored!\n");
+	tsprintf("CAN message ignored!\n");
 	return STATUS_CAN_FILTERED;
 }
