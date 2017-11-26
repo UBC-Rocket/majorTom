@@ -11,7 +11,7 @@ Mock implementation of IO SD card library
 @param Length of double array.
 @return status_t
 */
-status_t sdWriteDoublue(double[] output, int length) {
+status_t sdWriteDouble(double[] output, int length) {
 	fprintf(file_sd, "[TIMESTAMP] ");
 	for (int i = 0; i < length; i++) {
 		fprintf(file_sd, "%d", output[i]);
