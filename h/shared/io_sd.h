@@ -10,7 +10,7 @@ Header file for SD IO library
 /*
 IO SD functions go here
 */
-status_t sdWriteDouble();
-status_t sdWriteString();
+status_t sdWriteDouble(double[], int);
+status_t sdWriteString(char[]);
 
 #endif
