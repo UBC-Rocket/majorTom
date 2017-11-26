@@ -9,7 +9,8 @@ Header file containing general macros
 typedef enum status_enum {
 	STATUS_OK        =  0,
 	STATUS_ERROR     = -1,
-	STATUS_BAD_PARAM = -2
+	STATUS_BAD_PARAM = -2,
+	STATUS_CAN_FILTERED	= -3
 } status_t;
 
 #endif
