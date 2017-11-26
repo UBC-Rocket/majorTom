@@ -49,9 +49,6 @@ int main()
 				// #endif
 			}
 		}
-
-		fclose(fp_can_read);
-		fclose(fp_can_write);
 	}
 
 	tsprintf("Sharetest completed successfully!\n");
