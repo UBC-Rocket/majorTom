@@ -12,6 +12,7 @@ ACC_Y = 5
 ACC_Z = 6
 ALT = 7
 STATE = 8
+ALWAYS_PROCESS = 11111111111
 TRUNCATE_LOW = 7428000.0
 TRUNCATE_HIGH = 8500000.0
 SIGMA = 1.5
@@ -34,7 +35,7 @@ df_dict = {
     'State': []
 }
 
-filename = r'./SRAD Raw Data.txt'
+filename = r'./test-can/SRAD Raw Data.txt'
 with open(filename, 'r') as raw_file:
     content = raw_file.readlines()
     flag = True
@@ -64,7 +65,7 @@ df = df[df.index >= TRUNCATE_LOW]
 df = df[df.index <= TRUNCATE_HIGH]
 
 # Generate csv file, edit for more functionality
-filename_mock_test = './mock_data_' + str(SEED)
+filename_mock_test = './test-can/mock_data_' + str(SEED)
 with open(filename_mock_test + '.csv', 'w') as write_file:
     for index, row in df.iterrows():
         write_file.write(str(ALT))
@@ -73,6 +74,6 @@ with open(filename_mock_test + '.csv', 'w') as write_file:
         write_file.write(str(data))
         write_file.write('\n')
 
-filename_args = './can_test_args.txt'
+filename_args = './test-can/can_test_args.txt'
 with open(filename_args, 'w') as write_file:
     write_file.write(filename_mock_test + '\n')

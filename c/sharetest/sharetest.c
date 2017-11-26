@@ -18,13 +18,13 @@ int main()
 
 	rc = initCanMock();
 	if (rc != STATUS_OK) {
-		// #ifdef MOCK
+		#ifdef MOCK
 		tsprintf("Mock CAN bus initialization error.\n");
 		return rc;
-		// #endif
+		#endif
 	}
 
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < 1; i++) {
 		rc = initCanTest();
 		if (rc != STATUS_OK) {
 			#ifdef MOCK
@@ -36,17 +36,17 @@ int main()
 		for (int i = 0; i < 10; i++) {
 			rc = canRead(&id, &data);
 			if (rc != STATUS_OK && rc != STATUS_CAN_FILTERED) {
-				// #ifdef MOCK
+				#ifdef MOCK
 				tsprintf("Mock canRead() error.\n");
 				return rc;
-				// #endif
+				#endif
 			}
 			rc = canWrite(id, data);
 			if (rc != STATUS_OK) {
-				// #ifdef MOCK
+				#ifdef MOCK
 				tsprintf("Mock canWrite() error.\n");
 				return rc;
-				// #endif
+				#endif
 			}
 		}
 	}
