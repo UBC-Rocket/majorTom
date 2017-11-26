@@ -7,6 +7,9 @@ Header file for mocking utilities
 
 #include <general.h>
 
+//returns time in seconds
+time_t getTimeSec();
+
 status_t tsprintf(const char *format, ...);
 
 
