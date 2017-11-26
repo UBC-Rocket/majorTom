@@ -10,7 +10,7 @@ Implementations of mocking utilities
 #include <time.h>
 
 #include <general.h>
-#include "mock_utils.h"
+#include <shared/mock_utils.h>
 
 
 //returns time in seconds
