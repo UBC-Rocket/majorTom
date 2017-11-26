@@ -5,6 +5,10 @@ Header file for Board initialization library
 #ifndef INIT_H
 #define INIT_H
 
-//Initialization functions go here
+#include <general.h>
+
+/* Initialization functions */
+status_t initCanMock(void);
+status_t initCanTest(void);
 
 #endif
