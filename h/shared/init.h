@@ -10,9 +10,10 @@ Header file for Board initialization library
 
 extern FILE *file_sd;
 
-/*
-Initialization functions go here
-*/
+/* Initialization functions */
 status_t initSDFile(void);
+
+status_t initCanMock(void);
+status_t initCanTest(void);
 
 #endif
