@@ -14,11 +14,12 @@ ALT = 7
 STATE = 8
 TRUNCATE_LOW = 7428000.0
 TRUNCATE_HIGH = 8500000.0
-SEED = 2017
 SIGMA = 1.5
 
-# TODO: Implement seed for random
-random.seed(hash(SEED))
+# Use either a defined seed or a random seed
+# SEED = 2017
+SEED = random.randint(0, 1000000)
+random.seed(SEED)
 
 columns_ = ['Time', 'Gyro_x', 'Gyro_y', 'Gyro_z', 'Acc_x', 'Acc_y', 'Acc_z', 'Alt', 'State']
 df_dict = {
@@ -63,8 +64,8 @@ df = df[df.index >= TRUNCATE_LOW]
 df = df[df.index <= TRUNCATE_HIGH]
 
 # Generate csv file, edit for more functionality
-filename_mock_test = './mock_data_' + str(SEED) + '.csv'
-with open(filename_mock_test, 'w') as write_file:
+filename_mock_test = './mock_data_' + str(SEED)
+with open(filename_mock_test + '.csv', 'w') as write_file:
     for index, row in df.iterrows():
         write_file.write(str(ALT))
         write_file.write(', ')
@@ -74,4 +75,4 @@ with open(filename_mock_test, 'w') as write_file:
 
 filename_args = './can_test_args.txt'
 with open(filename_args, 'w') as write_file:
-    write_file.write(filename_args)
+    write_file.write(filename_mock_test + '\n')
