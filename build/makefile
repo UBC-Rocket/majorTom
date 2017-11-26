@@ -47,7 +47,7 @@ $(foreach i,$(BUILDS), $(eval $(call rules_o_aux,$(i))))
 define rules_img_mock
 .PHONY: $(1)_mock
 $(1)_mock: $(DIR_IMG)/$(1)_mock.img
-$(DIR_IMG)/$(1)_mock.img: $(DIR_OBJ)/$(1)/$(1).o $(DIR_OBJ)/$(1)/$(1)_hw_mock.o $(DIR_OBJ)/shared/init_hw_mock.o $(DIR_OBJ)/shared/gpio_hw_mock.o $(DIR_OBJ)/shared/can.o $(DIR_OBJ)/shared/can_hw_mock.o $(DIR_OBJ)/shared/mock_utils.o
+$(DIR_IMG)/$(1)_mock.img: $(DIR_OBJ)/$(1)/$(1).o $(DIR_OBJ)/$(1)/$(1)_hw_mock.o $(DIR_OBJ)/shared/init_hw_mock.o $(DIR_OBJ)/shared/sd_hw_mock.o $(DIR_OBJ)/shared/can_hw_mock.o $(DIR_OBJ)/shared/mock_utils.o
 	@mkdir -p $(DIR_IMG)
 	$(CC_mock) -lm -o $$@ $$?
 endef

@@ -4,7 +4,7 @@ Main implementation of Shared Library Test board
 
 #include <sharetest/sharetest.h>
 
-#include <shared/io_sd.h>
+#include <shared/sd.h>
 
 #include <stdint.h>
 
@@ -15,6 +15,18 @@ Main implementation of Shared Library Test board
 
 int main()
 {
+
+	/*
+	* SD File Logging Tests
+	*/
+	initSDFile();
+	tsprintf("Start SD logging tests...\n");
+	//sdWriteString("foo bar par");
+	double output[] = {0, 2, 5.04, 7.66};
+	sdWriteDouble(output, 4);
+	tsprintf("Finished SD logging tests.\n");
+
+
 	can_id_t id;
 	uint64_t data;
 	status_t rc;
@@ -54,15 +66,5 @@ int main()
 		}
 	}
 
-	/*
-	* SD File Logging Tests
-	*/
-	tsprintf("Start SD logging tests...");
-	sdWriteString("foo bar par");
-	double output[] = {0, 2, 5.04, 7.66};
-	sdWriteDouble(output, 4);
-	tsprintf("Finished SD logging tests.");
-
 	tsprintf("Sharetest completed successfully!\n");
-	return STATUS_OK;
 }

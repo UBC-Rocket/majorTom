@@ -2,13 +2,13 @@
 Header file for SD IO library
 */
 
-#ifndef IO_SD_H
-#define IO_SD_H
+#ifndef SD_H
+#define SD_H
 
 #include <general.h>
 
 /*
-IO SD functions go here
+SD functions go here
 */
 status_t sdWriteDouble(double[], int);
 status_t sdWriteString(char[]);

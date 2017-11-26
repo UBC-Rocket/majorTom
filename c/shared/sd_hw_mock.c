@@ -2,7 +2,7 @@
 Mock implementation of IO SD card library
 */
 
-#include <shared/io_sd.h>
+#include <shared/sd.h>
 #include <shared/init.h>
 
 /*
@@ -11,10 +11,10 @@ Mock implementation of IO SD card library
 @param Length of double array.
 @return status_t
 */
-status_t sdWriteDouble(double[] output, int length) {
+status_t sdWriteDouble(double output[], int length) {
 	fprintf(file_sd, "[TIMESTAMP] ");
 	for (int i = 0; i < length; i++) {
-		fprintf(file_sd, "%d", output[i]);
+		fprintf(file_sd, "%lf ", output[i]);
 	}
 	fprintf(file_sd, "\n");
 
@@ -26,7 +26,7 @@ status_t sdWriteDouble(double[] output, int length) {
 @param String
 @return status_t
 */
-status_t sdWriteString(char[] output) {
+status_t sdWriteString(char output[]) {
 	fprintf(file_sd, "[TIMESTAMP] %s\n", output);
 	return STATUS_OK;
 }

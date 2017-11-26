@@ -6,9 +6,6 @@ Header file for Apogee Detection board
 #define APDEC_H
 
 #include <general.h>
-#include <shared/init.h>
-#include <shared/gpio.h>
-#include <shared/can.h>
 
 //Define helper functions here
 
