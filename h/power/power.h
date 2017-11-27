@@ -6,9 +6,6 @@ Header file for Power board
 #define POWER_H
 
 #include <general.h>
-#include <shared/init.h>
-#include <shared/gpio.h>
-#include <shared/can.h>
 
 //Define helper functions here
 

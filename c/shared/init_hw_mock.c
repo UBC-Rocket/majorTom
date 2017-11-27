@@ -64,6 +64,16 @@ status_t initCanTest(void)
 		tsprintf("Failed to open CAN write data file.\n");
 		return STATUS_ERROR;
 	}
+}
+FILE *file_sd;
 
-	return STATUS_OK;
+//Mock implementations of functions from init.h
+
+status_t initSDFile(void) {
+	file_sd = fopen("./sd_file.txt", "w+");
+	if (file_sd == NULL) {
+		return STATUS_ERROR;
+	} else {
+		return STATUS_OK;
+	}
 }
