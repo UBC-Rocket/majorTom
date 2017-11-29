@@ -21,7 +21,7 @@ int main()
 	*/
 	initSDFile();
 	tsprintf("Start SD logging tests...\n");
-	//sdWriteString("foo bar par");
+	sdWriteString("foo bar par");
 	double output[] = {0, 2, 5.04, 7.66};
 	sdWriteDouble(output, 4);
 	tsprintf("Finished SD logging tests.\n");
