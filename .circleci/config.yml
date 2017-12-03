@@ -8,7 +8,4 @@ jobs:
       - setup_remote_docker
       - run:
           name: Run tests
-          command: |
-            USER_ID=`id -u`
-            GROUP_ID=`id -g`
-            docker run -it --volume `pwd`:/home/rkt --user=$USER_ID:$GROUP_ID ubcrocket/majortombuild make $1
+          command: ./dmake.sh
