@@ -3,8 +3,3 @@ o/*
 
 *.sublime-project
 *.sublime-workspace
-
-//Clion stuff
-.idea/
-cmake-build-debug
-CMakeLists.txt
