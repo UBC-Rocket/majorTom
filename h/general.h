@@ -10,7 +10,8 @@ typedef enum status_enum {
 	STATUS_OK        =  0,
 	STATUS_ERROR     = -1,
 	STATUS_BAD_PARAM = -2,
-	STATUS_CAN_FILTERED	= -3
+	STATUS_CAN_FILTERED	= -3,
+	STATUS_NO_DATA   = -4
 } status_t;
 
 #endif
