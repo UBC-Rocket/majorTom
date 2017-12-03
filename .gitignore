@@ -1,5 +1,6 @@
 img/*
 o/*
+build/sd_file.txt
 
 *.sublime-project
 *.sublime-workspace
