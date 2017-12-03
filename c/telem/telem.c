@@ -8,38 +8,7 @@ Hardware-independent functions from telem.h
 #include <memory.h>
 #include <pb/amessage.pb.h>
 #include "telem/telem.h"
-
-//returns time in seconds
-time_t getTimeSec() {
-	struct timespec spec;
-	clock_gettime(CLOCK_REALTIME, &spec);
-	return spec.tv_sec;
-}
-
-status_t telemInit() {
-	printf("telemInit()\n");
-	printf("setting up registers\n");
-
-	printf("calling up telEstLink()");
-	printf("leaving telemInit()\n");
-}
-
-status_t telEstLink() {
-	printf("telEstLink()\n");
-	printf("set frequency\n");
-	printf("set link speed\n");
-	printf("using bsp functions to establish link\n");
-	printf("attempt to negotiate\n"); //negotiating is for terrorists!
-	bool status = rand() % 2 == 0; //should call real radio link connection
-
-	if (status) { //do some sort of check for status code
-		return STATUS_OK;
-	} else {
-		return STATUS_ERROR;
-	}
-
-	printf("leaving telEstLink()\n");
-}
+#include "telem/telemFunc.h"
 
 
 status_t pbPackage(pb_byte_t* pBuf, cbd_t data) {
@@ -64,7 +33,6 @@ status_t pbPackage(pb_byte_t* pBuf, cbd_t data) {
  */
 int main() {
 	telemInit();
-	telEstLink();
 
 	while (true) {
 		//get raw canbus data

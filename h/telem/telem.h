@@ -31,21 +31,6 @@ typedef struct canbusData
 
 //Define helper functions here
 
-//sets up registers, attempt to link to ground station
-status_t telemInit();
-
-//sets up registers, attempt to link to ground station
-status_t telemWrite();
-
-//connect to ground station
-status_t telEstLink();
-
-status_t telCollect();
-
-//Main logic is here
-status_t telem(void);
-
-status_t listenOnBus(cbd_t* telemDataBuffer);
 
 //Entry point. Alternative versions based on hardware.
 int main(void);
