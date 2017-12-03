@@ -8,4 +8,6 @@ jobs:
       - setup_remote_docker
       - run:
           name: Run tests
-          command: make
+          command: |
+            cd build
+            make
