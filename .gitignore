@@ -3,3 +3,9 @@ o/*
 
 *.sublime-project
 *.sublime-workspace
+
+*.DS_Store
+.idea
+CMakeLists.txt
+cmake-build-debug
+docs
