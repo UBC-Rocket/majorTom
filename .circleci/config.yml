@@ -16,4 +16,5 @@ jobs:
           name: Run sharetest image
           command: |
             cd build
+            python ../test-can/genreate_test_file.py
             ./mock sharetest
