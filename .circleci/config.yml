@@ -11,3 +11,4 @@ jobs:
           command: |
             cd build
             make
+            ls
