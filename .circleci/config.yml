@@ -7,6 +7,13 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
-          name: Run tests
+          name: Build project
           command: |
-            pwd
+            cd build
+            make clean
+            make
+      - run:
+          name: Run sharetest image
+          command: |
+            cd mock
+            ./mock sharetest
