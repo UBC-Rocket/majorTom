@@ -66,14 +66,17 @@ $(DIR_OBJ)/%.o: $(DIR_SRC)/%.c \
 # - a corresponding hardware-dependent o file         (  o/<board>/<board>_hw_mock.o)
 # - the shared library's hardware-independent o files (  o/shared/<module>.o)
 # - The shared library's hardware-dependent o files   (  o/shared/<module>_hw_mock.o)
+# Each mock image also has a corresponding run rule that depends on the image
 define rules_img_mock
-.PHONY: $(1)_mock
-$(1)_mock: $(DIR_IMG)/$(1)_mock.img
 $(DIR_IMG)/$(1)_mock.img: $(DIR_OBJ)/$(1)/$(1).o \
                           $(DIR_OBJ)/$(1)/$(1)_hw_mock.o \
                           $(foreach j,$(MODULES),$(DIR_OBJ)/shared/$(j).o) \
                           $(foreach j,$(MODULES),$(DIR_OBJ)/shared/$(j)_hw_mock.o)
 	@mkdir -p $(DIR_IMG)
 	$(CC_mock) $(CFLAGS_mock) -o $$@ $$?
+$(1)_mock: $(DIR_IMG)/$(1)_mock.img
+$(1)_mock_run: $(DIR_IMG)/$(1)_mock.img
+	$(DIR_IMG)/$(1)_mock.img
+.PHONY: $(1)_mock $(1)_mock_run
 endef
 $(foreach i,$(BOARDS),$(eval $(call rules_img_mock,$(i))))
