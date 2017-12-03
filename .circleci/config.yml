@@ -8,4 +8,4 @@ jobs:
       - setup_remote_docker
       - run:
           name: Run tests
-          command: sudo ./dmake.sh
+          command: make
