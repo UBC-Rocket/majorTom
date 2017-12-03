@@ -19,7 +19,7 @@ static FILE *file_sd;
 */
 extern status_t sdInit(void)
 {
-	file_sd = fopen("./sd_file.txt", "w+");
+	file_sd = fopen("./test-io/sd_file.txt", "w+");
 	if (file_sd == NULL) {
 		return STATUS_ERROR;
 	} else {
