@@ -1,6 +1,6 @@
 # Makefile for MajorTom codebase
 # Type 'make clean' to remove all images and object files
-# Type 'make <board>_<>
+# Type 'make <board>_<build> to build an image of the <board> board for <build> hardware platform
 
 # Directories
 DIR_INC = ../h
@@ -9,56 +9,71 @@ DIR_OBJ = ../o
 DIR_IMG = ../img
 
 # A list of hardware platforms that code can be compiled for
-REAL_BUILDS = none_right_now
-BUILDS = mock
+PLATFORMS = mock
 
 # A list of boards MajorTom contains firmware for
 BOARDS = sharetest apdet telem power
 
+# A list of modules in the shared library
+MODULES = utils init can sd
+
 # A list of compilers associated with elements of $(BUILDS)
 CC_mock = gcc
 
-# By default, mock every board. This has to be the first rule or else it won't run when you type 'make'
-default:
-	$(foreach i,$(BOARDS), ./mock $(i) ;)
+# A list of compiler flags and settings associated with elements of $(BUILDS)
+CFLAGS_mock = -std=gnu99 -lm -lrt
 
-# Each mock o file must be compiled with the MOCK flag
-$(DIR_OBJ)/%_hw_mock.o: $(DIR_SRC)/%_hw_mock.c $(DIR_INC)/%.h
-	@mkdir -p $(@D)
-	$(CC_mock) -D MOCK=yes -o $@ $< -I$(DIR_INC) -I$(DIR_INC)/$(firstword $(subst /, ,$*)) -c
-
-# Each o file depends on corresponding c and h files
-define rules_o
-$(DIR_OBJ)/%_hw_$(1).o: $(DIR_SRC)/%_hw_$(1).c $(DIR_INC)/%.h
-	@mkdir -p $$(@D)
-	$(CC_$(1)) -o $$@ $$< -I$(DIR_INC) -I$(DIR_INC)/$$(firstword $$(subst /, ,$$*)) -c
-endef
-
-define rules_o_aux
-$(DIR_OBJ)/%.o: $(DIR_SRC)/%.c $(DIR_INC)/%.h
-	@mkdir -p $$(@D)
-	$(CC_$(1)) -o $$@ $$< -I$(DIR_INC) -I$(DIR_INC)/$$(firstword $$(subst /, ,$$*)) -c
-endef
-
-$(foreach i,$(REAL_BUILDS),$(eval $(call rules_o,$(i))))
-$(foreach i,$(BUILDS), $(eval $(call rules_o_aux,$(i))))
-
-# Each mock build depends on corresponding c and h files, and on everything in the shared code
-define rules_img_mock
-.PHONY: $(1)_mock
-$(1)_mock: $(DIR_IMG)/$(1)_mock.img
-$(DIR_IMG)/$(1)_mock.img: $(DIR_OBJ)/$(1)/$(1).o $(DIR_OBJ)/$(1)/$(1)_hw_mock.o $(DIR_OBJ)/shared/init_hw_mock.o $(DIR_OBJ)/shared/sd_hw_mock.o $(DIR_OBJ)/shared/can_hw_mock.o $(DIR_OBJ)/shared/mock_utils.o
-	@mkdir -p $(DIR_IMG)
-	$(CC_mock) -lm -o $$@ $$?
-endef
-$(foreach i,$(BOARDS),$(eval $(call rules_img_mock,$(i))))
+# By default, build all mock images. This has to be the first rule or else it won't run when you type 'make'
+default: $(foreach i,$(BOARDS), $(i)_mock)
 
 # Cleaning rules
+
+# Deletes object files
 cleano:
 	rm -rf $(DIR_OBJ)/*
+
+# Deletes image files
 cleanimg:
 	rm -rf $(DIR_IMG)/*
+
+# Deletes object files and image files
 clean: cleano cleanimg
 
 # Phony rules
 .PHONY: default cleano cleanimg clean
+
+# Each hardware-dependent o file  (o/<board>/<board>_hw_<build>.o or o/shared/<module>_hw_<build>.o)
+# depends on corresponding c file (c/<board>/<board>_hw_<build>.c or c/shared/<module>_hw_<build>.c)
+# and on corresponding h file     (h/<board>/<board>.h            or h/shared/<module>.h)
+define rules_hwdep_o
+$(DIR_OBJ)/%_hw_$(1).o: $(DIR_SRC)/%_hw_$(1).c \
+                        $(DIR_INC)/%.h
+	@mkdir -p $$(@D)
+	$(CC_$(1)) $(CFLAGS_$(1)) -o $$@ $$< -I$(DIR_INC) -I$(DIR_INC)/$$(firstword $$(subst /, ,$$*)) -c
+endef
+$(foreach i,$(PLATFORMS), $(eval $(call rules_hwdep_o,$(i))))
+
+# Each hardware-independent o file (o/<board>/<board>.o or o/shared/<module>.o)
+# depends on corresponding c file  (c/<board>/<board>.c or c/shared/<module>.c)
+# and on corresponding h file      (h/<board>/<board>.h or h/shared/<module>.h)
+$(DIR_OBJ)/%.o: $(DIR_SRC)/%.c \
+                $(DIR_INC)/%.h
+	@mkdir -p $(@D)
+	$(CC_mock) $(CFLAGS_mock) -o $@ $< -I$(DIR_INC) -I$(DIR_INC)/$(firstword $(subst /, ,$*)) -c
+
+# Each mock image                                     (img/<board>/<board>_mock.img) depends on:
+# - a corresponding hardware-independent o file       (  o/<board>/<board>.o)
+# - a corresponding hardware-dependent o file         (  o/<board>/<board>_hw_mock.o)
+# - the shared library's hardware-independent o files (  o/shared/<module>.o)
+# - The shared library's hardware-dependent o files   (  o/shared/<module>_hw_mock.o)
+define rules_img_mock
+.PHONY: $(1)_mock
+$(1)_mock: $(DIR_IMG)/$(1)_mock.img
+$(DIR_IMG)/$(1)_mock.img: $(DIR_OBJ)/$(1)/$(1).o \
+                          $(DIR_OBJ)/$(1)/$(1)_hw_mock.o \
+                          $(foreach j,$(MODULES),$(DIR_OBJ)/shared/$(j).o) \
+                          $(foreach j,$(MODULES),$(DIR_OBJ)/shared/$(j)_hw_mock.o)
+	@mkdir -p $(DIR_IMG)
+	$(CC_mock) $(CFLAGS_mock) -o $$@ $$?
+endef
+$(foreach i,$(BOARDS),$(eval $(call rules_img_mock,$(i))))

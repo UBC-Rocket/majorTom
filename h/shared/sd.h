@@ -1,5 +1,5 @@
 /*
-Header file for SD IO library
+Header file for SD library
 */
 
 #ifndef SD_H
@@ -7,10 +7,11 @@ Header file for SD IO library
 
 #include <general.h>
 
-/*
-SD functions go here
-*/
-status_t sdWriteDouble(double[], int);
-status_t sdWriteString(char[]);
+/* Hardware-dependent functions */
+extern status_t sdInit(void);
+extern status_t sdWriteDouble(double[], int);
+extern status_t sdWriteString(char[]);
+
+/* Hardware-independent functions */
 
 #endif
