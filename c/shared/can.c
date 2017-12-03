@@ -1,7 +1,7 @@
 /*
-Implementation of CAN bus library's hardware-independent portion
+Hardware-independent functions from can.h
 */
 
-#include <shared/can.h>
+#include <can.h>
 
-//Implementations of functions from can.h
+/* No hardware-independent functions in can.h */

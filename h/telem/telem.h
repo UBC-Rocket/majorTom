@@ -5,10 +5,9 @@ Header file for Telemetry board
 #ifndef TELEM_H
 #define TELEM_H
 
-#include <general.h>
-#include <shared/init.h>
-#include <shared/gpio.h>
-#include <shared/can.h>
+/* Hardware-dependent functions */
 
+/* Hardware-independent functions */
+extern int main(void);
 
 #endif

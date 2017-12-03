@@ -7,8 +7,9 @@ Header file for Board initialization library
 
 #include <general.h>
 
-/* Initialization functions */
-status_t initCanMock(void);
-status_t initCanTest(void);
+/* Hardware-dependent functions */
+extern status_t platformInit();
+
+/* Hardware-independent functions */
 
 #endif
