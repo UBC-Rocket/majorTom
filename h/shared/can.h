@@ -30,9 +30,9 @@ typedef enum can_id_enum {
 	CAN_ID_SENSOR_MAGNA_Z,
 
 	/* IDs for data points from barometric sensors */
-	CAN_ID_SENSOR_TEMP,
+	CAN_ID_SENSOR_TEMPERATURE,
 	CAN_ID_SENSOR_PRESSURE,
-
+	CAN_ID_SENSOR_CALC_ALTITUDE,
 
 } can_id_t;
 

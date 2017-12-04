@@ -8,6 +8,7 @@ Implementations of functions from utils.h for Mock hardware
 #include <stdint.h>
 #include <math.h>
 #include <time.h>
+#include <unistd.h>
 
 #include <general.h>
 #include <utils.h>
@@ -50,5 +51,11 @@ extern status_t tsprintf(char* format, ...)
 	va_end(args);
 
 	/* Success! */
+	return STATUS_OK;
+}
+
+extern status_t delay(uint64_t milliseconds)
+{
+	sleep(milliseconds);
 	return STATUS_OK;
 }
