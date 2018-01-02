@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+message AMessage {
+//note: all fields are optional by default
+  double a=1;
+  double b=2;
+}
+
+
+/*protobuf v2 version
+syntax = "proto2";
+message AMessage {
+  required double a=1;
+  optional double b=2;
+}*/
+
+//run with this
+/*
+COMPILED_NANOPB_DIR="nanopb-0.3.9-linux-x86"
+OUTPUT_DIR="gen"
+protoc --plugin=protoc-gen-nanopb=$COMPILED_NANOPB_DIR/generator/protoc-gen-nanopb --nanopb_out=$OUTPUT_DIR amessage.proto
+*/

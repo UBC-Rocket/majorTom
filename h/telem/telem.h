@@ -5,12 +5,6 @@ Header file for Telemetry board
 #ifndef TELEM_H
 #define TELEM_H
 
-/* Hardware-dependent functions */
-
-<<<<<<< HEAD
-/* Hardware-independent functions */
-extern int main(void);
-=======
 #include <stdbool.h>
 #include <stdint.h>
 #include <time.h> //for time_t
@@ -19,21 +13,44 @@ extern int main(void);
 #define SENSOR_COUNT 16
 #define LISTEN_QUANTUM 500
 #define BUFFER_SIZE 8
-typedef double canbus_t; //datatype used internally by the CAN Bus
-
-typedef struct canbusData
-{
-	bool isValid;
-	time_t timestamp;
-	canbus_t data[SENSOR_COUNT];
-} cbd_t;
+typedef double canbus_t;
 
 
-//Define helper functions here
+
+/* Hardware-dependent functions */
+#include <sys/socket.h>
+#include <sys/un.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+void initSend(int* fd, struct sockaddr_un* addr);
 
 
-//Entry point. Alternative versions based on hardware.
-int main(void);
->>>>>>> eb30bf7... work in progress towards telem mocking
+/* Hardware-independent functions */
+#include "amessage.pb.h"
+#include "pb_encode.h"
+#include "general.h"
+
+
+extern int main(void);
+
+//sets up registers, attempt to link to ground station
+status_t telemInit();
+
+//sets up registers, attempt to link to ground station
+status_t telemWrite();
+
+//connect to ground station
+status_t telEstLink();
+
+status_t telCollect();
+
+//Main logic is here
+status_t telem(void);
+
+status_t listenOnBus(AMessage* telemDataBuffer);
+
+status_t pbPackage(pb_byte_t* targetBuffer, size_t targetBufferSize, AMessage* data);
 
 #endif

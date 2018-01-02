@@ -7,6 +7,8 @@ DIR_INC = ../h
 DIR_SRC = ../c
 DIR_OBJ = ../o
 DIR_IMG = ../img
+DIR_PB_LIB = ../lib/nanopb
+DIR_PB_GEN = ../gen/pb
 
 # A list of hardware platforms that code can be compiled for
 PLATFORMS = mock
@@ -49,7 +51,7 @@ define rules_hwdep_o
 $(DIR_OBJ)/%_hw_$(1).o: $(DIR_SRC)/%_hw_$(1).c \
                         $(DIR_INC)/%.h
 	@mkdir -p $$(@D)
-	$(CC_$(1)) $(CFLAGS_$(1)) -o $$@ $$< -I$(DIR_INC) -I$(DIR_INC)/$$(firstword $$(subst /, ,$$*)) -c
+	$(CC_$(1)) $(CFLAGS_$(1)) -o $$@ $$< -I$(DIR_INC) -I$(DIR_INC)/$$(firstword $$(subst /, ,$$*)) -I$(DIR_PB_GEN) -I$(DIR_PB_LIB) -c
 endef
 $(foreach i,$(PLATFORMS), $(eval $(call rules_hwdep_o,$(i))))
 
@@ -59,8 +61,8 @@ $(foreach i,$(PLATFORMS), $(eval $(call rules_hwdep_o,$(i))))
 $(DIR_OBJ)/%.o: $(DIR_SRC)/%.c \
                 $(DIR_INC)/%.h
 	@mkdir -p $(@D)
-	$(CC_mock) $(CFLAGS_mock) -o $@ $< -I$(DIR_INC) -I$(DIR_INC)/$(firstword $(subst /, ,$*)) -c
-
+	$(CC_mock) $(CFLAGS_mock) -o $@ $< -I$(DIR_INC) -I$(DIR_INC)/$(firstword $(subst /, ,$*)) -I$(DIR_PB_GEN) -I$(DIR_PB_LIB) -c
+#FIXME: WE ADDED weirdness above
 # Each mock image                                     (img/<board>/<board>_mock.img) depends on:
 # - a corresponding hardware-independent o file       (  o/<board>/<board>.o)
 # - a corresponding hardware-dependent o file         (  o/<board>/<board>_hw_mock.o)
@@ -72,8 +74,9 @@ $(1)_mock: $(DIR_IMG)/$(1)_mock.img
 $(DIR_IMG)/$(1)_mock.img: $(DIR_OBJ)/$(1)/$(1).o \
                           $(DIR_OBJ)/$(1)/$(1)_hw_mock.o \
                           $(foreach j,$(MODULES),$(DIR_OBJ)/shared/$(j).o) \
-                          $(foreach j,$(MODULES),$(DIR_OBJ)/shared/$(j)_hw_mock.o)
+                          $(foreach j,$(MODULES),$(DIR_OBJ)/shared/$(j)_hw_mock.o)\
+
 	@mkdir -p $(DIR_IMG)
-	$(CC_mock) $(CFLAGS_mock) -o $$@ $$?
+	$(CC_mock) $(CFLAGS_mock) -I$(DIR_PB_GEN) -I$(DIR_PB_LIB) ../lib/nanopb/{pb_encode.c,pb_decode.c,pb_common.c} -o $$@ $$?
 endef
 $(foreach i,$(BOARDS),$(eval $(call rules_img_mock,$(i))))
