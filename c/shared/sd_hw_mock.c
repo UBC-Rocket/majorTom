@@ -12,7 +12,7 @@ Implementations of functions from sd.h for Mock hardware
 static FILE *file_sd;
 
 /*
-@brief Initialization for SD log - mock implementation (opens a file)
+@brief Initialization for SD log - mock implementation (opens the file)
 @return status_t
 */
 extern status_t sdInit(void)
