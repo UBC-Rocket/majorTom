@@ -5,3 +5,8 @@ test-can/*.txt
 test-io/sd_file.txt
 *.sublime-project
 *.sublime-workspace
+
+*.DS_Store
+.idea
+CMakeLists.txt
+cmake-build-debug

@@ -12,7 +12,28 @@ Header file for CAN bus library
 /* CAN identifiers */
 typedef enum can_id_enum {
 	CAN_ALWAYS_PROCESS	= 11111111111,
-	CAN_ALWAYS_IGNORE	= 00000000000
+	CAN_ALWAYS_IGNORE	= 00000000000,
+
+	CAN_ID_APDET_STATE,
+
+	/* IDs for data points from general IMU sensors */
+	CAN_ID_SENSOR_GYRO_X,
+	CAN_ID_SENSOR_GYRO_Y,
+	CAN_ID_SENSOR_GYRO_Z,
+
+	CAN_ID_SENSOR_ACCEL_X,
+	CAN_ID_SENSOR_ACCEL_Y,
+	CAN_ID_SENSOR_ACCEL_Z,
+
+	CAN_ID_SENSOR_MAGNA_X,
+	CAN_ID_SENSOR_MAGNA_Y,
+	CAN_ID_SENSOR_MAGNA_Z,
+
+	/* IDs for data points from barometric sensors */
+	CAN_ID_SENSOR_TEMPERATURE,
+	CAN_ID_SENSOR_PRESSURE,
+	CAN_ID_SENSOR_CALC_ALTITUDE,
+
 } can_id_t;
 
 /* Hardware-dependent functions */
