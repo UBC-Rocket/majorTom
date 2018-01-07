@@ -49,11 +49,11 @@ int main()
 	}
 
 	tsprintf("Finished SD logging tests.\n");
-
+	/**
 	can_id_t id;
 	uint64_t data;
 
-	/* CAN tests */
+	/* CAN tests *
 	rc = canInit();
 	if (rc != STATUS_OK) {
 		tsprintf("canInit returned <%d>\n", rc);
@@ -72,7 +72,7 @@ int main()
 			tsprintf("canWrite returned <%d>\n", rc);
 			return rc;
 		}
-	}
+	} */
 
 	tsprintf("Sharetest exiting\n");
 	return 0;
