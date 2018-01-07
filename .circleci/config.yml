@@ -8,9 +8,7 @@ jobs:
       - run:
           name: Build project
           command: |
-            cd build
-            make clean
-            make
+            ./dmake.sh
       - run:
           name: Run sharetest image
           command: |
