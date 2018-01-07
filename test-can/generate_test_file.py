@@ -48,7 +48,7 @@ def randomchoice():
     return result
 
 
-filename = r'./SRAD Raw Data.txt'
+filename = r'./test-can/SRAD Raw Data.txt'
 with open(filename, 'r') as raw_data:
     content = raw_data.readlines()
     flag = True
@@ -78,7 +78,7 @@ df = df[df.index >= TRUNCATE_LOW]
 df = df[df.index <= TRUNCATE_HIGH]
 
 # Generate csv file, edit for more functionality
-filename_mock_test = './mock_data_' + str(SEED)
+filename_mock_test = './test-can/mock_data_' + str(SEED)
 with open(filename_mock_test + '.csv', 'w') as write_file:
     for index, row in df.iterrows():
         datapoint = randomchoice()
