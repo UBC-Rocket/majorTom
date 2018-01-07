@@ -205,9 +205,9 @@ static status_t detect_main_alt(void)
 			continue;
 		}
 
-		/* TODO: calculate altitude? nvm */
+		/* TODO: calculate altitude separately  */
 
-		if (alt <= 3000) { /* if altitude is negative below 3000 feet */
+		if (alt <= 3000) { /* if altitude is below 3000 feet */
 			main_count++;
 		} else {
 			main_count = 0; /* ensures "in a row" */
@@ -248,7 +248,7 @@ static status_t final_descent(void)
 }
 
 
-/* MAIN ===================================================================== */
+/* ======= MAIN ========= */
 
 /**
  * @brief Apogee Detection board routine - hardware-independent implementation
