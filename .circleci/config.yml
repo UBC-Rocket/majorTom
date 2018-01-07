@@ -1,0 +1,18 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: ubcrocket/majortombuild
+    steps:
+      - checkout
+      - run:
+          name: Build project
+          command: |
+            cd build
+            make clean
+            make
+      - run:
+          name: Run sharetest image
+          command: |
+            cd build
+            ./mock sharetest
