@@ -1,0 +1,108 @@
+\hypertarget{can_8h}{\section{h/shared/can.h File Reference}
+\label{can_8h}\index{h/shared/can.\-h@{h/shared/can.\-h}}
+}
+{\ttfamily \#include $<$stdint.\-h$>$}\\*
+{\ttfamily \#include $<$general.\-h$>$}\\*
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \hyperlink{can_8h_a2fd68f3e028209c383adc6d8b60bb690}{can\-\_\-id\-\_\-enum} \hyperlink{can_8h_ab6dc88719df4d8f6183cdeb3c35dc66f}{can\-\_\-id\-\_\-t}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{can_8h_a2fd68f3e028209c383adc6d8b60bb690}{can\-\_\-id\-\_\-enum} \{ \hyperlink{can_8h_a2fd68f3e028209c383adc6d8b60bb690a77a37056d658baef2446f400d05bbd7e}{C\-A\-N\-\_\-\-A\-L\-W\-A\-Y\-S\-\_\-\-P\-R\-O\-C\-E\-S\-S} = 11111111111, 
+\hyperlink{can_8h_a2fd68f3e028209c383adc6d8b60bb690abb9d49eb5df700fd3ab24ae69c8f2673}{C\-A\-N\-\_\-\-A\-L\-W\-A\-Y\-S\-\_\-\-I\-G\-N\-O\-R\-E} = 00000000000
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{general_8h_a9296f7fb17417cf93337ae52a2f27d2b}{status\-\_\-t} \hyperlink{can_8h_a640d1238d4640ff946a23a911ddaabd1}{can\-Init} (void)
+\begin{DoxyCompactList}\small\item\em Initialization for C\-A\-N bus -\/ mock version (opens automatically-\/generated files) \end{DoxyCompactList}\item 
+\hyperlink{general_8h_a9296f7fb17417cf93337ae52a2f27d2b}{status\-\_\-t} \hyperlink{can_8h_adb3b46574369944fd0c3b9828b377dad}{can\-Write} (\hyperlink{can_8h_ab6dc88719df4d8f6183cdeb3c35dc66f}{can\-\_\-id\-\_\-t} id, uint64\-\_\-t msg)
+\begin{DoxyCompactList}\small\item\em Write a message to the C\-A\-N bus -\/ mock implementation (writes to a file) \end{DoxyCompactList}\item 
+\hyperlink{general_8h_a9296f7fb17417cf93337ae52a2f27d2b}{status\-\_\-t} \hyperlink{can_8h_a605fe65453134dd7646f0035b61de4f3}{can\-Read} (\hyperlink{can_8h_ab6dc88719df4d8f6183cdeb3c35dc66f}{can\-\_\-id\-\_\-t} $\ast$id, uint64\-\_\-t $\ast$msg)
+\begin{DoxyCompactList}\small\item\em A mock implementation of reading a message from the C\-A\-N bus. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Typedef Documentation}
+\hypertarget{can_8h_ab6dc88719df4d8f6183cdeb3c35dc66f}{\index{can.\-h@{can.\-h}!can\-\_\-id\-\_\-t@{can\-\_\-id\-\_\-t}}
+\index{can\-\_\-id\-\_\-t@{can\-\_\-id\-\_\-t}!can.h@{can.\-h}}
+\subsubsection[{can\-\_\-id\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf can\-\_\-id\-\_\-enum}  {\bf can\-\_\-id\-\_\-t}}}\label{can_8h_ab6dc88719df4d8f6183cdeb3c35dc66f}
+
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{can_8h_a2fd68f3e028209c383adc6d8b60bb690}{\index{can.\-h@{can.\-h}!can\-\_\-id\-\_\-enum@{can\-\_\-id\-\_\-enum}}
+\index{can\-\_\-id\-\_\-enum@{can\-\_\-id\-\_\-enum}!can.h@{can.\-h}}
+\subsubsection[{can\-\_\-id\-\_\-enum}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf can\-\_\-id\-\_\-enum}}}\label{can_8h_a2fd68f3e028209c383adc6d8b60bb690}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{C\-A\-N\-\_\-\-A\-L\-W\-A\-Y\-S\-\_\-\-P\-R\-O\-C\-E\-S\-S@{C\-A\-N\-\_\-\-A\-L\-W\-A\-Y\-S\-\_\-\-P\-R\-O\-C\-E\-S\-S}!can.\-h@{can.\-h}}\index{can.\-h@{can.\-h}!C\-A\-N\-\_\-\-A\-L\-W\-A\-Y\-S\-\_\-\-P\-R\-O\-C\-E\-S\-S@{C\-A\-N\-\_\-\-A\-L\-W\-A\-Y\-S\-\_\-\-P\-R\-O\-C\-E\-S\-S}}\item[{\em 
+\hypertarget{can_8h_a2fd68f3e028209c383adc6d8b60bb690a77a37056d658baef2446f400d05bbd7e}{C\-A\-N\-\_\-\-A\-L\-W\-A\-Y\-S\-\_\-\-P\-R\-O\-C\-E\-S\-S}\label{can_8h_a2fd68f3e028209c383adc6d8b60bb690a77a37056d658baef2446f400d05bbd7e}
+}]\index{C\-A\-N\-\_\-\-A\-L\-W\-A\-Y\-S\-\_\-\-I\-G\-N\-O\-R\-E@{C\-A\-N\-\_\-\-A\-L\-W\-A\-Y\-S\-\_\-\-I\-G\-N\-O\-R\-E}!can.\-h@{can.\-h}}\index{can.\-h@{can.\-h}!C\-A\-N\-\_\-\-A\-L\-W\-A\-Y\-S\-\_\-\-I\-G\-N\-O\-R\-E@{C\-A\-N\-\_\-\-A\-L\-W\-A\-Y\-S\-\_\-\-I\-G\-N\-O\-R\-E}}\item[{\em 
+\hypertarget{can_8h_a2fd68f3e028209c383adc6d8b60bb690abb9d49eb5df700fd3ab24ae69c8f2673}{C\-A\-N\-\_\-\-A\-L\-W\-A\-Y\-S\-\_\-\-I\-G\-N\-O\-R\-E}\label{can_8h_a2fd68f3e028209c383adc6d8b60bb690abb9d49eb5df700fd3ab24ae69c8f2673}
+}]\end{description}
+\end{Desc}
+
+
+\subsection{Function Documentation}
+\hypertarget{can_8h_a640d1238d4640ff946a23a911ddaabd1}{\index{can.\-h@{can.\-h}!can\-Init@{can\-Init}}
+\index{can\-Init@{can\-Init}!can.h@{can.\-h}}
+\subsubsection[{can\-Init}]{\setlength{\rightskip}{0pt plus 5cm}{\bf status\-\_\-t} can\-Init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{can_8h_a640d1238d4640ff946a23a911ddaabd1}
+
+
+Initialization for C\-A\-N bus -\/ mock version (opens automatically-\/generated files) 
+
+\begin{DoxyReturn}{Returns}
+Status. 
+\end{DoxyReturn}
+\hypertarget{can_8h_a605fe65453134dd7646f0035b61de4f3}{\index{can.\-h@{can.\-h}!can\-Read@{can\-Read}}
+\index{can\-Read@{can\-Read}!can.h@{can.\-h}}
+\subsubsection[{can\-Read}]{\setlength{\rightskip}{0pt plus 5cm}{\bf status\-\_\-t} can\-Read (
+\begin{DoxyParamCaption}
+\item[{{\bf can\-\_\-id\-\_\-t} $\ast$}]{id, }
+\item[{uint64\-\_\-t $\ast$}]{data}
+\end{DoxyParamCaption}
+)}}\label{can_8h_a605fe65453134dd7646f0035b61de4f3}
+
+
+A mock implementation of reading a message from the C\-A\-N bus. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em $\ast$id} & A pointer to store the message identifier. \\
+\hline
+{\em $\ast$data} & A pointer to store the message data. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status. 
+\end{DoxyReturn}
+\hypertarget{can_8h_adb3b46574369944fd0c3b9828b377dad}{\index{can.\-h@{can.\-h}!can\-Write@{can\-Write}}
+\index{can\-Write@{can\-Write}!can.h@{can.\-h}}
+\subsubsection[{can\-Write}]{\setlength{\rightskip}{0pt plus 5cm}{\bf status\-\_\-t} can\-Write (
+\begin{DoxyParamCaption}
+\item[{{\bf can\-\_\-id\-\_\-t}}]{id, }
+\item[{uint64\-\_\-t}]{data}
+\end{DoxyParamCaption}
+)}}\label{can_8h_adb3b46574369944fd0c3b9828b377dad}
+
+
+Write a message to the C\-A\-N bus -\/ mock implementation (writes to a file) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The identifier used to identify where the message is coming from. \\
+\hline
+{\em data} & The data to send. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status. 
+\end{DoxyReturn}
