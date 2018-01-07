@@ -1,0 +1,45 @@
+\hypertarget{sharetest_8h}{\section{h/sharetest/sharetest.h File Reference}
+\label{sharetest_8h}\index{h/sharetest/sharetest.\-h@{h/sharetest/sharetest.\-h}}
+}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{sharetest_8h_a840291bc02cba5474a4cb46a9b9566fe}{main} (void)
+\begin{DoxyCompactList}\small\item\em Apogee Detection board routine -\/ hardware-\/independent implementation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{sharetest_8h_a840291bc02cba5474a4cb46a9b9566fe}{\index{sharetest.\-h@{sharetest.\-h}!main@{main}}
+\index{main@{main}!sharetest.h@{sharetest.\-h}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{sharetest_8h_a840291bc02cba5474a4cb46a9b9566fe}
+
+
+Apogee Detection board routine -\/ hardware-\/independent implementation. 
+
+\begin{DoxyReturn}{Returns}
+Status.
+\end{DoxyReturn}
+Apogee Detection board routine -\/ hardware-\/independent implementation.
+
+\begin{DoxyReturn}{Returns}
+Status. 
+\end{DoxyReturn}
+can\-\_\-id\-\_\-t id; uint64\-\_\-t data;
+
+/$\ast$ C\-A\-N tests $\ast$ rc = \hyperlink{can__hw__mock_8c_a640d1238d4640ff946a23a911ddaabd1}{can\-Init()}; if (rc != S\-T\-A\-T\-U\-S\-\_\-\-O\-K) \{ tsprintf(\char`\"{}can\-Init returned $<$\%d$>$\textbackslash{}n\char`\"{}, rc); return rc; \}
+
+for (int i = 0; i $<$ 10; i++) \{ rc = can\-Read(\&id, \&data); if (rc != S\-T\-A\-T\-U\-S\-\_\-\-O\-K \&\& rc != S\-T\-A\-T\-U\-S\-\_\-\-C\-A\-N\-\_\-\-F\-I\-L\-T\-E\-R\-E\-D) \{ tsprintf(\char`\"{}can\-Read returned $<$\%d$>$\textbackslash{}n\char`\"{}, rc); return rc; \}
+
+rc = can\-Write(id, data); if (rc != S\-T\-A\-T\-U\-S\-\_\-\-O\-K) \{ tsprintf(\char`\"{}can\-Write returned $<$\%d$>$\textbackslash{}n\char`\"{}, rc); return rc; \} \}
+
+can\-\_\-id\-\_\-t id; uint64\-\_\-t data;
+
+/$\ast$ C\-A\-N tests $\ast$ rc = \hyperlink{can__hw__mock_8c_a640d1238d4640ff946a23a911ddaabd1}{can\-Init()}; if (rc != S\-T\-A\-T\-U\-S\-\_\-\-O\-K) \{ tsprintf(\char`\"{}can\-Init returned $<$\%d$>$\textbackslash{}n\char`\"{}, rc); return rc; \}
+
+for (int i = 0; i $<$ 10; i++) \{ rc = can\-Read(\&id, \&data); if (rc != S\-T\-A\-T\-U\-S\-\_\-\-O\-K \&\& rc != S\-T\-A\-T\-U\-S\-\_\-\-C\-A\-N\-\_\-\-F\-I\-L\-T\-E\-R\-E\-D) \{ tsprintf(\char`\"{}can\-Read returned $<$\%d$>$\textbackslash{}n\char`\"{}, rc); return rc; \}
+
+rc = can\-Write(id, data); if (rc != S\-T\-A\-T\-U\-S\-\_\-\-O\-K) \{ tsprintf(\char`\"{}can\-Write returned $<$\%d$>$\textbackslash{}n\char`\"{}, rc); return rc; \} \} 

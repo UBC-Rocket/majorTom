@@ -1,0 +1,7 @@
+if [ "$#" -ne 1 ] ; then
+	echo "You must specify a build target" >&2
+	exit 1
+fi
+set -e
+make $1_mock
+../img/$1_mock.img
