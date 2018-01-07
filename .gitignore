@@ -9,4 +9,3 @@ build/sd_file.txt
 .idea
 CMakeLists.txt
 cmake-build-debug
-docs
