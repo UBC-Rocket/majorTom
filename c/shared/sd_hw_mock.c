@@ -12,14 +12,12 @@ Implementations of functions from sd.h for Mock hardware
 static FILE *file_sd;
 
 /*
-@brief Initialization for SD log - mock implementation (opens a file)
-@param Array of doubles
-@param Length of double array.
+@brief Initialization for SD log - mock implementation (opens the file)
 @return status_t
 */
 extern status_t sdInit(void)
 {
-	file_sd = fopen("./sd_file.txt", "w+");
+	file_sd = fopen("../test-io/sd_file.txt", "w+");
 	if (file_sd == NULL) {
 		return STATUS_ERROR;
 	} else {

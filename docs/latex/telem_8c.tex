@@ -1,0 +1,35 @@
+\hypertarget{telem_8c}{\section{c/telem/telem.c File Reference}
+\label{telem_8c}\index{c/telem/telem.\-c@{c/telem/telem.\-c}}
+}
+{\ttfamily \#include $<$telem.\-h$>$}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{telem_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main} ()
+\begin{DoxyCompactList}\small\item\em Telementry board routine -\/ hardware-\/independent implementation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{telem_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{\index{telem.\-c@{telem.\-c}!main@{main}}
+\index{main@{main}!telem.c@{telem.\-c}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{telem_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}
+
+
+Telementry board routine -\/ hardware-\/independent implementation. 
+
+Apogee Detection board routine -\/ hardware-\/independent implementation.
+
+\begin{DoxyReturn}{Returns}
+Status. 
+\end{DoxyReturn}
+can\-\_\-id\-\_\-t id; uint64\-\_\-t data;
+
+/$\ast$ C\-A\-N tests $\ast$ rc = \hyperlink{can__hw__mock_8c_a640d1238d4640ff946a23a911ddaabd1}{can\-Init()}; if (rc != S\-T\-A\-T\-U\-S\-\_\-\-O\-K) \{ tsprintf(\char`\"{}can\-Init returned $<$\%d$>$\textbackslash{}n\char`\"{}, rc); return rc; \}
+
+for (int i = 0; i $<$ 10; i++) \{ rc = can\-Read(\&id, \&data); if (rc != S\-T\-A\-T\-U\-S\-\_\-\-O\-K \&\& rc != S\-T\-A\-T\-U\-S\-\_\-\-C\-A\-N\-\_\-\-F\-I\-L\-T\-E\-R\-E\-D) \{ tsprintf(\char`\"{}can\-Read returned $<$\%d$>$\textbackslash{}n\char`\"{}, rc); return rc; \}
+
+rc = can\-Write(id, data); if (rc != S\-T\-A\-T\-U\-S\-\_\-\-O\-K) \{ tsprintf(\char`\"{}can\-Write returned $<$\%d$>$\textbackslash{}n\char`\"{}, rc); return rc; \} \} 
