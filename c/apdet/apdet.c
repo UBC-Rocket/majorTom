@@ -5,53 +5,66 @@ Hardware-independent functions from apdet.h
 #include <shared/can.h>
 #include <shared/utils.h>
 
-/* STATIC HELPER FUNCTIONS ===================================================================== */
+/* STATIC HELPER FUNCTIONS / DRIVERS ===================================================================== */
 
-static status_t calculate_altitude(float *altitude, float temperature, float pressure)
-{
-	*altitude = temperature + pressure; /* stub-ish, TODO */
-	return STATUS_OK;
-}
-
+/*
+@brief Drogue deployment driver.
+@return status_t
+*/
 extern status_t deploy_drogue()
 {
+	/* TODO */
 	return STATUS_OK;
 }
 
+/*
+@brief Payload deployment driver.
+@return status_t
+*/
 extern status_t deploy_payload()
 {
+	/* TODO */
 	return STATUS_OK;
 }
 
+/*
+@brief Main deployment driver.
+@return status_t
+*/
 extern status_t deploy_main()
 {
+	/* TODO */
 	return STATUS_OK;
 }
 
 
-/* ROCKET FLIGHT STATE FUNCTIONS ===================================================================== */
+/* ROCKET FLIGHT STATE FUNCTIONS ================================================================= */
 
-/* transition from STANDBY to POWERED_ASCENT */
+/*
+@brief Transitions from STANDBY to POWERED_ASCENT after seeing NUM_CHECKS positive accelerations in a row.
+@return status_t
+*/
 static status_t detect_launch(void)
 {
-	/* detects giant spike in acceleration 
-	return when we've seen 5 positive accelerations in a row
-	then transitions to powered ascent state */
+	/* expect giant spike in acceleration */
 	int launch_count = 0;
+	float accel = 0;
 	
 	while (launch_count < NUM_CHECKS) { 
 
-		can_id_t can_id; /* canRead stores data in these two variables, takes them as parameters */
+		can_id_t can_id;
 		float can_msg;
-		status_t retval = canRead(&can_id, (uint64_t *) &can_msg); /* read from CAN */
-		if (retval != STATUS_OK || can_id != CAN_ID_SENSOR_ACCEL_Z) { /* check status is okay and id is what we want */
+		status_t retval = canRead(&can_id, (uint64_t *) &can_msg);
+		if (retval != STATUS_OK || can_id != CAN_ID_SENSOR_ACCEL_Z) {
 			continue;
 		}
 
-		if (can_msg >= SIM_LAUNCH_ACCEL) { /* only ACCEL_Z */
+		accel = can_msg;
+
+		if (accel >= SIM_LAUNCH_ACCEL) {
 			launch_count++;
 		} else {
-			launch_count = 0; /* ensures "in a row" */
+			launch_count = 0;
 		}
 	}
 
@@ -62,13 +75,14 @@ static status_t detect_launch(void)
 	return STATUS_OK;
 }
 
-/* transition from POWERED_ASCENT to COASTING */
-/* involve time to double check / as a backup? data is not stable at this point */
+/*
+@brief Transitions from POWERED_ASCENT to COASTING after seeing NUM_CHECKS negative accelerations in a row.
+@return status_t
+*/
 static status_t detect_burnout(void)
 {
-	/* giant drop in acceleration,
-	return when we've seen 5 negative accelerations in a row
-	then transitions to coasting state */
+	/* involve time to double check / as a backup? Check reasonable altitude?
+	Data may not be stable at this point */
 	int burnout_count = 0;
 	float accel = 0;
 
@@ -76,17 +90,17 @@ static status_t detect_burnout(void)
 
 		can_id_t can_id;
 		float can_msg;
-		status_t retval = canRead(&can_id, (uint64_t *) &can_msg); /* read from CAN */
+		status_t retval = canRead(&can_id, (uint64_t *) &can_msg);
 		if (retval != STATUS_OK || can_id != CAN_ID_SENSOR_ACCEL_Z) {
 			continue;
 		}
 
 		accel = can_msg;
 
-		if (accel <= 0) { /* if acceleration is negative. TODO: check reasonable altitude? */
+		if (accel <= 0) {
 			burnout_count++;
 		} else {
-			burnout_count = 0; /* ensures "in a row" */
+			burnout_count = 0;
 		}
 	}
 
@@ -97,62 +111,37 @@ static status_t detect_burnout(void)
 	return STATUS_OK;
 }
 
-/* transition from COASTING to DEPLOY DROGUE */
+/*
+@brief Transition from COASTING to DEPLOY DROGUE by checking altitude delta is negative.
+@return status_t
+*/
 static status_t coasting_and_test_apogee(void)
 {
-	/* do stuff */
-	int apogee_count = 0;
 
-	float temperature = -1;
-	float pressure = -1;
+	/* check that acceleration is 0 or positive downwards (acc >= 0 ) too? */
+	int apogee_count = 0;
 
 	float alt = 0;
 	float prev_alt = 0;
 
-	/* wait until acceleration is 0 or positive downwards (acc >= 0 ) and the the change in altitude is negative */
-
-	/*
-	assume we'll get a sensor read for pressre and temperature in close proximity. we don't want
-	to get the pressure and then 5 seconds later get the temperature and calculate alt from there because
-	it won't be accurate.
-	TODO: fix this by moving calculation to sensors board and reading altitude here from the bus (CAN_ID_SENSOR_CALC_ALTITUDE)
-	*/
 	while (apogee_count < NUM_CHECKS) {
 
 		can_id_t can_id;
 		float can_msg;
-		status_t retval = canRead(&can_id, (uint64_t *) &can_msg); /* read from CAN */
-		if (retval == STATUS_OK) {
-			if (can_id == CAN_ID_SENSOR_TEMPERATURE) {
-				temperature = can_msg;
-			} else if (can_id != CAN_ID_SENSOR_PRESSURE) {
-				pressure = can_msg;
-			} else {
-				continue;
-			}
-		} else {
+		status_t retval = canRead(&can_id, (uint64_t *) &can_msg);
+		if (retval != STATUS_OK || can_id != CAN_ID_SENSOR_CALC_ALTITUDE) {
 			continue;
 		}
 
 		prev_alt = alt;
+		alt = can_msg;
 
-		/* TODO: Use proper float comparison */
-		if (temperature != -1 && pressure != -1) {
-			/* TODO: Get alt */
-			calculate_altitude(&alt, temperature, pressure);
-			temperature = -1;
-			pressure = -1;
-		} else {
-			continue;
-		}
-
-		if (alt <= prev_alt) { /* if altitude delta is negative */
+		if (alt <= prev_alt) {
 			apogee_count++;
 		} else {
-			apogee_count = 0; /* ensures "in a row" */
+			apogee_count = 0;
 		}
 	}
-
 
 	status_t retval = STATUS_ERROR;
 	for (int i = 0; i < NUM_WRITE_ATTEMPTS && retval != STATUS_OK; i++) {
@@ -161,12 +150,14 @@ static status_t coasting_and_test_apogee(void)
 	return STATUS_OK;
 }
 
-/* actually deploys the drogue, then transitions from DEPLOY_DROGUE to DEPLOY_PAYLOAD */
+
+/*
+@brief Actually deploys the drogue, waits 3s and transitions from DEPLOY_DROGUE to DEPLOY_PAYLOAD.
+@return status_t
+*/
 static status_t deploy_drogue_state(void)
 {
 	deploy_drogue();
-
-	/* wait 3 seconds until we transition to deploy_payload */
 	delay(3);
 
 	status_t retval = STATUS_ERROR;
@@ -176,11 +167,13 @@ static status_t deploy_drogue_state(void)
 	return STATUS_OK;
 }
 
-/* actually deploys the payload, then transitions from DEPLOY_PAYLOAD to INITIAL_DESCENT */
+/*
+@brief Actually deploys the payload, then transitions from DEPLOY_PAYLOAD to INITIAL_DESCENT.
+@return status_t
+*/
 static status_t deploy_payload_state(void)
 {
 	deploy_payload();
-	/* transition immediately */
 
 	status_t retval = STATUS_ERROR;
 	for (int i = 0; i < NUM_WRITE_ATTEMPTS && retval != STATUS_OK; i++) {
@@ -189,10 +182,12 @@ static status_t deploy_payload_state(void)
 	return STATUS_OK;
 }
 
-/* transitions from INITIAL_DESCENT to DEPLOY_MAIN */
+/*
+@brief transitions from INITIAL_DESCENT to DEPLOY_MAIN after rocket's alt <= 3000 ft.
+@return status_t
+*/
 static status_t detect_main_alt(void)
 {
-	/* test if you're below 3000 ft (no accel) (main can't be deployed above that), and then transition */
 	int main_count = 0;
 	float alt = 0;
 
@@ -200,20 +195,19 @@ static status_t detect_main_alt(void)
 
 		can_id_t can_id;
 		float can_msg;
-		status_t retval = canRead(&can_id, (uint64_t *) &can_msg); /* read from CAN */
+		status_t retval = canRead(&can_id, (uint64_t *) &can_msg);
 		if (retval != STATUS_OK || can_id != CAN_ID_SENSOR_CALC_ALTITUDE) {
 			continue;
 		}
 
-		/* TODO: calculate altitude separately  */
+		alt = can_msg;
 
-		if (alt <= 3000) { /* if altitude is below 3000 feet */
+		if (alt <= 3000) {
 			main_count++;
 		} else {
-			main_count = 0; /* ensures "in a row" */
+			main_count = 0;
 		}
 	}
-
 
 	status_t retval = STATUS_ERROR;
 	for (int i = 0; i < NUM_WRITE_ATTEMPTS && retval != STATUS_OK; i++) {
@@ -222,11 +216,13 @@ static status_t detect_main_alt(void)
 	return STATUS_OK;
 }
 
-/* actually deploys the main parachute, then transitions from DEPLOY_MAIN to FINAL_DESCENT */
+/*
+@brief Actually deploys the main parachute, then transitions from DEPLOY_MAIN to FINAL_DESCENT.
+@return status_t
+*/
 static status_t deploy_main_state(void)
 {
 	deploy_main();
-	/* transition immediately */
 
 	status_t retval = STATUS_ERROR;
 	for (int i = 0; i < NUM_WRITE_ATTEMPTS && retval != STATUS_OK; i++) {
@@ -235,10 +231,35 @@ static status_t deploy_main_state(void)
 	return STATUS_OK;
 }
 
-/* transitions from FINAL_DESCENT to LANDED */
+/*
+@brief Actually deploys the main parachute, then transitions from transitions from FINAL_DESCENT to LANDED.
+@return status_t
+*/
 static status_t final_descent(void)
 {
-	/* check if landed */
+	int land_count = 0;
+
+	float alt = 0;
+	float prev_alt = 0;
+
+	while (land_count < NUM_CHECKS) {
+
+		can_id_t can_id;
+		float can_msg;
+		status_t retval = canRead(&can_id, (uint64_t *) &can_msg);
+		if (retval != STATUS_OK || can_id != CAN_ID_SENSOR_CALC_ALTITUDE) {
+			continue;
+		}
+
+		prev_alt = alt;
+		alt = can_msg;
+
+		if (alt == prev_alt) { /* give error bound? */
+			land_count++;
+		} else {
+			land_count = 0;
+		}
+	}
 
 	status_t retval = STATUS_ERROR;
 	for (int i = 0; i < NUM_WRITE_ATTEMPTS && retval != STATUS_OK; i++) {
@@ -248,10 +269,10 @@ static status_t final_descent(void)
 }
 
 
-/* ======= MAIN ========= */
+/* MAIN =============================================================================== */
 
 /**
- * @brief Apogee Detection board routine - hardware-independent implementation
+ * @brief Apogee Detection board routine - hardware-independent implementation.
  * @return Status.
  */
 int main()
