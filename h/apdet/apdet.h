@@ -17,11 +17,11 @@ Header file for Apogee Detection board
 #define APDET_STATE_FINAL_DESCENT     	7
 #define APDET_STATE_LANDED            	8
 
-#define SIM_LAUNCH_ACCEL 			40 /* 40 is old value, ask Ollie assuming sims are accurate, > 40 */
-#define SIM_BURNOUT_ACCEL_DELTA		4  /* 40 is old value, ask Ollie */
+#define SIM_LAUNCH_ACCEL 			   40 /* 40 is old value, ask Ollie assuming sims are accurate, > 40 */
+#define SIM_BURNOUT_ACCEL_DELTA		    4  /* 40 is old value, ask Ollie */
 
-#define NUM_CHECKS          		5  /* each condition has to pass 5 times */
-#define NUM_WRITE_ATTEMPTS  		5  /* 5 is temp value, tbd from testing */
+#define NUM_CHECKS          		    5  /* each condition has to pass 5 times */
+#define NUM_WRITE_ATTEMPTS  		    5  /* 5 is temp value, tbd from testing */
 
 /* Hardware-dependent functions */
 extern status_t deploy_drogue();
