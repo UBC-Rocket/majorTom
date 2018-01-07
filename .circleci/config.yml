@@ -1,14 +1,13 @@
 version: 2
 jobs:
   build:
-    docker:
-      - image: ubcrocket/majortombuild
     machine: true
     steps:
       - checkout
       - run:
           name: Build project
           command: |
+            docker pull ubcrocket/majortombuild
             ./dmake.sh
       - run:
           name: Run sharetest image
