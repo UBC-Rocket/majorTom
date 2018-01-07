@@ -6,14 +6,8 @@ Header file for CAN bus library
 #define CAN_H
 
 #include <stdint.h>
-#include <stdio.h>
-#include <general.h>
 
-/* Global file pointers */
-#ifdef MOCK
-extern FILE *fp_can_write;
-extern FILE *fp_can_read;
-#endif
+#include <general.h>
 
 /* CAN identifiers */
 typedef enum can_id_enum {
@@ -21,8 +15,11 @@ typedef enum can_id_enum {
 	CAN_ALWAYS_IGNORE	= 00000000000
 } can_id_t;
 
-/* CAN functions */
-status_t canWrite(can_id_t id, uint64_t msg);
-status_t canRead(can_id_t *id, uint64_t *msg);
+/* Hardware-dependent functions */
+extern status_t canInit(void);
+extern status_t canWrite(can_id_t id, uint64_t msg);
+extern status_t canRead(can_id_t *id, uint64_t *msg);
+
+/* Hardware-independent functions */
 
 #endif
