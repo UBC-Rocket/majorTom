@@ -10,8 +10,8 @@ Header file for Apogee Detection board
 #define APDET_STATE_STANDBY             0
 #define APDET_STATE_POWERED_ASCENT      1
 #define APDET_STATE_COASTING            2
-#define APDET_STATE_DEPLOY_DROGUE     	3
-#define APDET_STATE_DEPLOY_PAYLOAD    	4
+#define APDET_STATE_DEPLOY_DROGUE       3
+#define APDET_STATE_DEPLOY_PAYLOAD      4
 #define APDET_STATE_INITIAL_DESCENT     5
 #define APDET_STATE_DEPLOY_MAIN         6
 #define APDET_STATE_FINAL_DESCENT       7
