@@ -4,6 +4,7 @@ jobs:
     docker:
       - image: ubcrocket/majortombuild
     steps:
+      - setup_remote_docker
       - checkout
       - run:
           name: Build project
