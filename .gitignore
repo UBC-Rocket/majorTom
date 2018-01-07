@@ -1,6 +1,7 @@
 img/*
 o/*
 *.csv
+test-can/*.txt
 test-io/sd_file.txt
 *.sublime-project
 *.sublime-workspace
