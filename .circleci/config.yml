@@ -3,8 +3,8 @@ jobs:
   build:
     docker:
       - image: ubcrocket/majortombuild
+    machine: true
     steps:
-      - setup_remote_docker
       - checkout
       - run:
           name: Build project
