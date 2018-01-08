@@ -1,13 +1,14 @@
 /*
-Header file for Power board
+Header file for actuator library
 */
 
-#ifndef POWER_H
-#define POWER_H
+#ifndef ACT_H
+#define ACT_H
+
+#include <general.h>
 
 /* Hardware-dependent functions */
 
 /* Hardware-independent functions */
-extern int main(void);
 
 #endif
