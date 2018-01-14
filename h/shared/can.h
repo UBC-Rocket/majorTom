@@ -11,8 +11,8 @@ Header file for CAN bus library
 
 /* CAN identifiers */
 typedef enum can_id_enum {
-	CAN_ALWAYS_PROCESS	= 11111111111,
-	CAN_ALWAYS_IGNORE	= 00000000000,
+	CAN_ALWAYS_PROCESS	= 0x000,
+	CAN_ALWAYS_IGNORE	= 0x7FF,
 
 	CAN_ID_APDET_STATE,
 
@@ -38,8 +38,8 @@ typedef enum can_id_enum {
 
 /* Hardware-dependent functions */
 extern status_t canInit(void);
-extern status_t canWrite(can_id_t id, uint64_t msg);
-extern status_t canRead(can_id_t *id, uint64_t *msg);
+extern status_t canWrite(can_id_t id, uint64_t data);
+extern status_t canRead(can_id_t *id, uint64_t *data);
 
 /* Hardware-independent functions */
 
