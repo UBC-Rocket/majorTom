@@ -12,14 +12,15 @@ Mock implementation of Telemetry board hardware-dependent functions
 
 
 char socket_path[] = "\0hidden";
-int fd;
 struct sockaddr_un addr;
+int fd; //file descriptor for send data of unix sockets to reciever
 
 // - do socket setup here
 status_t telemInit()
 {
 	printf("telemInit called\n");
 	initSend(&fd, &addr);
+	return STATUS_OK;
 }
 
 void initSend(int* fd, struct sockaddr_un* addr)
@@ -50,14 +51,8 @@ void initSend(int* fd, struct sockaddr_un* addr)
 
 status_t telemWrite()
 {
-
+	return STATUS_OK;
 }
-
-status_t telem(void)
-{
-	return 0;
-}
-
 
 //function stub
 status_t canListen(int* id, canbus_t* canbusData) {
@@ -72,35 +67,24 @@ status_t canListen(int* id, canbus_t* canbusData) {
 	return STATUS_OK;
 }
 
-//listens on the bus and updates telemDataBuffer with stuff from CAN bus until timeout
-//or received data from SENSOR_COUNT unique sensors
-//returns STATUS_OK if we receive data
-#define BAD_FLAG 0
-status_t listenOnBus(AMessage* telemDataBuffer) {
-	bzero(telemDataBuffer, sizeof(AMessage_size));
-	int uniqueSourceCount = 0;
-	for (int i = 0; i < LISTEN_QUANTUM && uniqueSourceCount < SENSOR_COUNT; i++) {
-		int senderID;
-		canbus_t sensorReading;
-		canListen(&senderID, &sensorReading);
 
-		//TODO: check if sensors ever return null (or else uniqueSourceCount is useless)
-		if (telemDataBuffer->data[senderID] == BAD_FLAG) {
-			uniqueSourceCount++;
+
+status_t pbSend(pb_ostream_t* stream, pb_byte_t buffer[AMessage_size]) {
+	printf("\nSending %lu bytes of payload: ", stream->bytes_written);
+	fwrite(buffer, stream->bytes_written, 1, stdout); // Write to stdout raw bytes(printf stops on null byte)
+
+	ssize_t bytesSent = send(fd, buffer, stream->bytes_written, 0);
+	if (bytesSent != stream->bytes_written)
+//		if(sendto(fd, arr[i], sizes[i], 0, (const struct sockaddr*) &addr, sizeof(addr)) != sizes[i])
+	{
+		if (bytesSent > 0) {
+			perror("partial write\n");
+			return STATUS_ERROR;
+		} else {
+			perror("write error");
+			return STATUS_ERROR;
 		}
-		telemDataBuffer->data[senderID] = sensorReading;
 	}
 
-	if (uniqueSourceCount > 0) {
-		time_t time; getTimeSec(&time);
-		telemDataBuffer->timestamp = time;
-		telemDataBuffer->data_count = uniqueSourceCount;
-		return STATUS_OK;
-	}
-
-	return STATUS_NO_DATA;
+	return STATUS_OK;
 }
-
-
-
-

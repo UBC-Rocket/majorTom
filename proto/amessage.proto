@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+message AMessage {
+//note: all fields are optional by default
+	uint64 timestamp = 1;
+	repeated double data = 2;
+}
+
+/******Run to generate file (do from project root folder):
+//note must be run from .proto folder because the message .options file will not be read
+
+COMPILED_NANOPB_DIR="incl/nanopb"
+OUTPUT_DIR="gen"
+protoc --plugin=protoc-gen-nanopb=$COMPILED_NANOPB_DIR/generator/protoc-gen-nanopb --nanopb_out=$OUTPUT_DIR proto/amessage.proto
+
+//Alternate
+nanopb-0.3.9-linux-x86/generator-bin/protoc --nanopb_out=gen proto/amessage.proto
+*/
