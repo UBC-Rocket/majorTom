@@ -24,9 +24,8 @@ typedef double canbus_t;
 #include <stdlib.h>
 #include <unistd.h>
 
-void initSend(int* fd, struct sockaddr_un* addr);
+status_t initSend(int* fd, struct sockaddr_un* addr);
 status_t canListen(int* id, canbus_t* canbusData);
-
 
 /* Hardware-independent functions */
 #include "amessage.pb.h"
@@ -38,16 +37,8 @@ extern int main(void);
 //sets up registers, attempt to link to ground station
 status_t telemInit();
 
-//writes data to fd
-status_t telemWrite();
-
-//connect to ground station
-status_t telEstLink();
-
-status_t telCollect();
 
 status_t listenOnBus(AMessage* telemDataBuffer);
-
 
 status_t pbPackage(pb_byte_t* targetBuffer, pb_ostream_t* stream, size_t targetBufferSize, AMessage* data);
 

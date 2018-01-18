@@ -13,23 +13,26 @@ Mock implementation of Telemetry board hardware-dependent functions
 
 char socket_path[] = "\0hidden";
 struct sockaddr_un addr;
-int fd; //file descriptor for send data of unix sockets to reciever
+int fd; //file descriptor for sending data through unix sockets to receiver
 
 // - do socket setup here
 status_t telemInit()
 {
-	printf("telemInit called\n");
-	initSend(&fd, &addr);
+	tsprintf("telemInit called\n");
+	if(initSend(&fd, &addr) != STATUS_OK)
+	{
+		tsprintf("Error in telemInit\n");
+	}
 	return STATUS_OK;
 }
 
-void initSend(int* fd, struct sockaddr_un* addr)
+status_t initSend(int* fd, struct sockaddr_un* addr)
 {
 	printf("initSend called\n");
 
 	if ((*fd = socket(AF_UNIX, SOCK_DGRAM, 0)) == -1) {
 		perror("socket error");
-		exit(-1);
+		return STATUS_ERROR;
 	}
 	printf("created socket\n");
 
@@ -44,15 +47,13 @@ void initSend(int* fd, struct sockaddr_un* addr)
 	//use connect to avoid passing more params with sendto vs write
 	if (connect(*fd, (struct sockaddr*) addr, sizeof(struct sockaddr_un)) == -1) {
 		perror("connect error");
-		exit(-1);
+		return STATUS_ERROR;
 	}
 	printf("initSend completed\n");
-}
 
-status_t telemWrite()
-{
 	return STATUS_OK;
 }
+
 
 //function stub
 status_t canListen(int* id, canbus_t* canbusData) {
@@ -66,7 +67,6 @@ status_t canListen(int* id, canbus_t* canbusData) {
 	}
 	return STATUS_OK;
 }
-
 
 
 status_t pbSend(pb_ostream_t* stream, pb_byte_t buffer[AMessage_size]) {
