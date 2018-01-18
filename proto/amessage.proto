@@ -2,8 +2,9 @@ syntax = "proto3";
 
 message AMessage {
 //note: all fields are optional by default
-	uint64 timestamp = 1;
+	int64 timestamp = 1; //unix uses int64 time usually
 	repeated double data = 2;
+	fixed32 validDataIndexes = 3;
 }
 
 /******Run to generate file (do from project root folder):
