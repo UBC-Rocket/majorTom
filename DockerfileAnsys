@@ -1,0 +1,11 @@
+FROM ubuntu:xenial
+WORKDIR /root/linx64
+RUN apt update && apt install -y wget lsb-core;
+RUN wget http://www.ansys.com/-/media/ansys/corporate/files/pdf/solutions/it-professionals/licensing/linx64.tar; tar xf linx64.tar
+RUN echo "ubcrocket" > /etc/hostname
+
+docker build -t ubcrocket .
+
+#mac address range from 02:42:ac:11:00:00 to 02:42:ac:11:ff:ff
+#need extra hostname because docker randomly assigns it
+docker run -ti --mac-address 02:42:ac:11:22:33 --hostname ubcrocket ubcrocket:latest
